@@ -1,6 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -101,11 +103,11 @@ public class Main {
 
     //FileInputStream
 
-//    try(FileInputStream fileInputStream = new FileInputStream("src/main/resources/download.jpg")) {
+//    try(FileInputStream fileInputStream = new FileInputStream("lesson10/src/main/resources/download.jpg")) {
 //      System.out.println("File size is bytes: " + fileInputStream.available());
 //      byte[] buffer = new byte[fileInputStream.available()];
 //      fileInputStream.read(buffer);
-//      File file = new File("src/main/resources/download2.jpg");
+//      File file = new File("lesson10/src/main/resources/download2.jpg");
 //      FileOutputStream fileOutputStream = new FileOutputStream(file);
 //      fileOutputStream.write(buffer);
 //      fileOutputStream.flush();
@@ -123,23 +125,32 @@ public class Main {
 //      }
 //    }
 
-  }
 
-  //Serialization
+    //Serialization
 
-//    try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/person.dat"))) {
-//      Person p = new Person("Sam", 33, 178, true);
-//      oos.writeObject(p);
-//    } catch(Exception ex) {
-//      System.out.println(ex.getMessage());
-//    }
+//    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lesson10/src/main/resources/person.dat"));
+//    Person person1 = new Person("Sam", 33, 178, true);
+//    oos.writeObject(person1);
+//    oos.close();
 
-//    try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/main/resources/person.dat"))) {
-//      Person p = (Person) ois.readObject();
-//      System.out.printf(p.toString());
-//    } catch(Exception ex) {
-//      ex.printStackTrace();
-//    }
+    //Deserialization
+//    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("lesson10/src/main/resources/person.dat"));
+//    Person person2 = (Person) ois.readObject();
+//    System.out.printf(person2.toString());
+//    ois.close();
+
+    //Externalizable
+
+//    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lesson10/src/main/resources/person.dat"));
+//    Person person1 = new Person("Donald", 35, 200, true);
+//    person1.writeExternal(oos);
+
+//    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("lesson10/src/main/resources/person.dat"));
+//    Person person2 = new Person();
+//    person2.readExternal(ois);
+//    System.out.println(person2);
+
+    //JSON
 
 //    Person person = new Person("Jhon", 23, 180, false);
 //    ObjectMapper objectMapper = new ObjectMapper();
@@ -151,7 +162,10 @@ public class Main {
 //        "  \"married\": true,\n" +
 //        "  \"height\": 1.78\n" +
 //        "}";
-
+//
+//
 //    Person person1 = objectMapper.readValue(json, Person.class);
 //    System.out.println(person1);
+
+  }
 }

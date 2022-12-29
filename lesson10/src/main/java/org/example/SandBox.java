@@ -1,5 +1,7 @@
 package org.example;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayReader;
@@ -11,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 
@@ -126,4 +130,45 @@ public class SandBox {
     }
   }
 
+  void serialization() throws Exception{
+    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lesson10/src/main/resources/person.dat"));
+    Person p = new Person("Sam", 33, 178, true);
+    oos.writeObject(p);
+    oos.close();
+  }
+
+  void deserialization() throws Exception{
+    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("lesson10/src/main/resources/person.dat"));
+    Person p = (Person) ois.readObject();
+    System.out.println(p.toString());
+  }
+
+  void exSerializable() throws Exception{
+    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lesson10/src/main/resources/person.dat"));
+    Person person1 = new Person("Donald", 35, 200, true);
+    person1.writeExternal(oos);
+  }
+
+  void exDeserializable() throws Exception{
+    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("lesson10/src/main/resources/person.dat"));
+    Person person2 = new Person();
+    person2.readExternal(ois);
+    System.out.println(person2);
+  }
+
+  void json() throws Exception{
+    Person person = new Person("Jhon", 23, 180, false);
+    ObjectMapper objectMapper = new ObjectMapper();
+    System.out.println(objectMapper.writeValueAsString(person));
+
+    String json = "{\n" +
+        "  \"name\": \"Bill\",\n" +
+        "  \"age\": 30,\n" +
+        "  \"married\": true,\n" +
+        "  \"height\": 1.78\n" +
+        "}";
+
+    Person person1 = objectMapper.readValue(json, Person.class);
+    System.out.println(person1);
+  }
 }

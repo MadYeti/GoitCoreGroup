@@ -23,6 +23,18 @@ import java.util.TreeSet;
 public class Main {
   public static void main(String[] args) {
 
+    ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+    arrayDeque.add(2);
+    arrayDeque.add(4);
+    arrayDeque.add(5);
+    arrayDeque.add(7);
+    arrayDeque.add(8);
+    System.out.println(arrayDeque);
+    System.out.println(arrayDeque.peek());
+    System.out.println(arrayDeque);
+    System.out.println(arrayDeque.poll());
+    System.out.println(arrayDeque);
+
 //    Map<Character, Character> bracketsType = Map.of(')', '(', ']', '[', '}', '{');
 //    Deque<Integer> openBracketsIndex = new ArrayDeque<>();
 //    Deque<Character> stack = new ArrayDeque<>();
@@ -86,28 +98,28 @@ public class Main {
 //    System.out.println(stringList.contains("56"));
 
     //HashMap
-    MyHashMap<Integer, String> map = new MyHashMap<>(new MyHashMap.Node[16]);
-    System.out.println(map.size());
-    map.put(1, "Kyiv");
-    map.put(2, "Warsaw");
-    map.put(3, "London");
-    map.put(4, "Madrid");
-    map.put(5, "Paris");
-    map.put(6, "Rome");
-    map.put(7, "Berlin");
-    map.put(8, "Prague");
-    map.put(9, "Oslo");
-    map.put(10, "Helsinki");
-    map.put(11, "Lisbon");
-    map.put(12, "Tokyo");
-    map.put(13, "Dublin");
-    map.put(14, "Tbilisi");
-    map.put(15, "Sofia");
-    map.put(16, "Amsterdam");
-    System.out.println(map);
-    map.remove(12);
-    System.out.println(map);
-    System.out.println(map.get(12));
+//    MyHashMap<Integer, String> map = new MyHashMap<>(new MyHashMap.Node[16]);
+//    System.out.println(map.size());
+//    map.put(1, "Kyiv");
+//    map.put(2, "Warsaw");
+//    map.put(3, "London");
+//    map.put(4, "Madrid");
+//    map.put(5, "Paris");
+//    map.put(6, "Rome");
+//    map.put(7, "Berlin");
+//    map.put(8, "Prague");
+//    map.put(9, "Oslo");
+//    map.put(10, "Helsinki");
+//    map.put(11, "Lisbon");
+//    map.put(12, "Tokyo");
+//    map.put(13, "Dublin");
+//    map.put(14, "Tbilisi");
+//    map.put(15, "Sofia");
+//    map.put(16, "Amsterdam");
+//    System.out.println(map);
+//    map.remove(12);
+//    System.out.println(map);
+//    System.out.println(map.get(12));
 
   }
 

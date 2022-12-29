@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.Objects;
 import java.util.Random;
 
-@Data
-public class MyHashMap<K, V> {
+public class MyHashMap <K, V>{
 
   private static int numberOfNodes = 0;
   private Node[] hashTable;
