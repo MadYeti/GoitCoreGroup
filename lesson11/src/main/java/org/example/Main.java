@@ -4,13 +4,20 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Predicate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
 
 public class Main {
+
+  static int counter = 0;
   public static void main(String[] args) {
 
     Singable singable = song -> {};
@@ -33,17 +40,27 @@ public class Main {
       }
     };
 
-    Person person = new Person(30, "Jhon");
 
-    Optional<Person> optionalPerson = Optional.of(person);
+    //Stream API
+    List<Integer> list = asList(1, 2, 4, 7, 5, 2, 9, 0, 10, 12, 14, 6, 4, 1, 1, 3);
 
-    optionalPerson.ifPresent(value -> System.out.println(value));
-    optionalPerson.orElseGet(() -> new Person(12, "David"));
+    Supplier<Stream<String>> streamSupplier =
+        () -> Stream.of("d2", "a2", "b1", "b3", "c")
+            .filter(s -> s.startsWith("a"));
 
-    String defaultName = optionalPerson.filter(per -> per.getAge() != 28)
-        .map(per -> per.getName())
-        .orElse("DefaultName");
+    streamSupplier.get().anyMatch(s -> true);   // ok
+    streamSupplier.get().noneMatch(s -> true);  // ok
 
-    System.out.println(defaultName);
+    Map<Integer, Integer> collect = list.stream()
+        .collect(Collectors.toMap(number -> number, Function.identity(), (a, b) -> b, TreeMap::new));
+    System.out.println(collect);
+
+    HashMap<String, String> stringHashMap = new HashMap<>(2);
+    stringHashMap.put("1", "1");
+    stringHashMap.put("2", "1");
+    stringHashMap.put("3", "1");
+    stringHashMap.put("4", "1");
+    System.out.println(stringHashMap);
+
   }
 }
