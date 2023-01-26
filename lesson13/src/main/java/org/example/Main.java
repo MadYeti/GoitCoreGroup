@@ -1,5 +1,7 @@
 package org.example;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -16,12 +18,16 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class Main {
-  private static final String TEST_URL = "https://jsonplaceholder.typicode.com/users/3";
+  private static final String TEST_URL = "https://jsonplaceholder.typicode.com/users/1/todos";
 
   public static void main(String[] args) throws Exception {
 
+    //Task #3
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(TEST_URL))
@@ -31,22 +37,63 @@ public class Main {
     HttpResponse<String> response =
         client.send(request, HttpResponse.BodyHandlers.ofString());
 
-    System.out.println(response.statusCode());
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    //Deserialization from json to todos list
+    List<Todo> todos = objectMapper.readValue(response.body(), new TypeReference<>() {});
+
+    List<Todo> completedTodos = todos.stream()
+        .filter(Todo::isCompleted)
+        .toList();
+
+    System.out.println(completedTodos);
 
 
-    URL url = new URL(TEST_URL);
-    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-    httpURLConnection.setRequestMethod("POST");
-    httpURLConnection.setDoOutput(true);
-    OutputStream outputStream = httpURLConnection.getOutputStream();
-    outputStream.write(Files.readAllBytes(new File("lesson13/src/main/resources/user.json").toPath()));
-    outputStream.flush();
-    System.out.println(httpURLConnection.getResponseCode());
-    BufferedReader bf = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-    String line;
-    while((line = bf.readLine()) != null){
-      System.out.println(line);
-    }
-
+    //Task #2
+//    HttpClient client = HttpClient.newHttpClient();
+////    HttpRequest request = HttpRequest.newBuilder()
+////        .header("Content-Type", "application/json")
+////        .uri(URI.create(TEST_URL))
+////        .PUT(HttpRequest.BodyPublishers.ofFile(Paths.get("lesson13/src/main/resources/user.json")))
+////        .build();
+//    HttpRequest request = HttpRequest.newBuilder()
+//        .uri(URI.create(TEST_URL))
+//        .GET()
+//        .build();
+//
+//    HttpResponse<String> response =
+//        client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//    System.out.println(response.statusCode());
+//
+//    ObjectMapper objectMapper = new ObjectMapper();
+//
+//    //Deserialization response body to posts list
+//    List<Post> posts = objectMapper.readValue(response.body(), new TypeReference<>() {});
+//
+//    posts.add(new Post(2, 1, "title", "body"));
+//
+//    Optional<Integer> max = posts.stream()
+//        .map(Post::getId)
+//        .max(Integer::compareTo);
+//
+//    String URL = "https://jsonplaceholder.typicode.com/posts/".concat(max.get().toString()).concat("/comments");
+//
+//    HttpRequest secondRequest = HttpRequest.newBuilder()
+//        .uri(URI.create(URL))
+//        .GET()
+//        .build();
+//
+//    HttpResponse<String> secondResponse =
+//        client.send(secondRequest, HttpResponse.BodyHandlers.ofString());
+//
+//    //Deserialization response body to comments list
+//    List<Comment> comments = objectMapper.readValue(secondResponse.body(), new TypeReference<>() {});
+//
+//    List<String> strings = comments.stream()
+//        .map(Comment::getBody)
+//        .toList();
+//
+//    System.out.println(strings);
   }
 }
